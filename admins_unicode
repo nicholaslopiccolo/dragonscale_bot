@@ -1,4 +1,5 @@
-username:uid
-test1:11111111
-test2:22222222
-test3:33333333
+name:uid:role
+test1:11111111:root
+test2:22222222:admin
+test3:33333333:admin
+test4:444444:sq_leader
