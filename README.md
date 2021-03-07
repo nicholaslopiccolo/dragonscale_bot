@@ -6,20 +6,17 @@
 
 ## Setup
 
-Create auth.py file with this setup
+Add your token in auth.py
 
 ```sh
-params = {
-    "token": "TOKEN-HERE",
-    "admins": []
-}
+TOKEN = "<TOKEN>"
 ```
 
 ## Installation
 
 1. Open terminal
 2. Navigate to the location you desire to install the bot
-3. Run the following commands:
+3. Run the following commands (use python >=3.7):
 
 ```sh
 git clone https://github.com/nicholaslopiccolo/dragonscastle_bot.git
