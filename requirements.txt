@@ -1,3 +1,4 @@
+mysql-connector-python
 python-telegram-bot
 certifi
 tornado>=5.1

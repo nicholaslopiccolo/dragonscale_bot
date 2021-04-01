@@ -2,8 +2,6 @@
 
 > Telegram bot in python3.7.
 
-[![PYTHON Version][npm-url][3.7]
-
 ## Setup
 
 Add your token in auth.py
@@ -28,9 +26,17 @@ python3.7 test.py
 
 ## Development setup
 
-## Release History
+## Commands List
 
-## Meta
+/start
+
+/admins_list
+/add_admin role uid name
+/rm_admin uid
+
+/squads_list
+/add_squad chat_id type name
+/rm_squad chat_id
 
 ## Docs
 
