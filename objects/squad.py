@@ -1,38 +1,45 @@
 
 class squad:
-    def __init__(self):
-        print("Creating squad...")
-        self.name = "Test"
-        self.chat_id = "11111111111"
+    def __init__(self, cid: int, tp: int, name: str):
+        self.name = name
+        self.chat_id = cid
+        self.type = tp
+
         self.attack = 9990
         self.defense = 9990
 
 # GETTERS
-    def get_name(self):
+    def get_name(self) -> str:
         return self.name
 
-    def get_chat_id(self):
+    def get_chat_id(self) -> int:
         return self.chat_id
 
-    def get_attack(self):
+    def get_type(self) -> int:
+        return self.type
+
+    def get_attack(self) -> int:
         return self.attack
 
-    def get_defense(self):
+    def get_defense(self) -> int:
         return self.defense
 
 # SETTERS
-    def get_name(self, name):
+    def set_name(self, name: str):
         self.name = name
 
-    def get_chat_id(self, chat_id):
+    def set_chat_id(self, chat_id: int):
         self.chat_id = chat_id
 
-    def get_attack(self, attack):
+    def set_type(self, tp: int):
+        self.type = tp
+
+    def set_attack(self, attack: int):
         self.attack = attack
 
-    def get_defense(self, defense):
+    def set_defense(self, defense: int):
         self.defense = defense
 
 # UTILS
-    def to_msg_string(self):
+    def to_msg_string(self) -> str:
         return f"{self.name}\n {self.attack}⚔\n {self.defense}🛡"

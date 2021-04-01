@@ -1,4 +1,5 @@
-from ..utils import bad_command
+from utils.bad_comand import bad_command
+from objects.player import player
 from telegram import (
     ReplyKeyboardMarkup,
     ReplyKeyboardRemove,
@@ -9,38 +10,41 @@ from telegram.ext import (
     CallbackContext,
 )
 
-
+App = None
 white_list = None
 
 
-def init(permissions):
+def init(app):
+    global App
     global white_list
-    white_list = permissions
+    App = app
+    white_list = app.get_white_list()
 
 #   /add_admin role uid name
 
 
 def start(update: Update, context: CallbackContext) -> int:
     params = update.message.text.split()
-    # print(params)
-    if len(params) != 4:
+
+    if len(params) < 4:
         return bad_command(update, context)
-    # try:
 
-    role = int(params[1])
-    uid = int(params[2])
-    name = params[3]
+    try:
+        role = int(params[1])
+        uid = int(params[2])
+        name = ' '.join(params[3:])
 
-    admin = {
-        'name': name,
-        'uid': uid,
-        'role': role
-    }
-    white_list.add_user(admin['uid'], admin['role'], admin['name'])
+        pl = white_list.get_player(uid)
+        if pl != -1:
+            update.message.reply_text(f"player exsist")
+            return ConversationHandler.END
 
-    update.message.reply_text(
-        f"{admin['name'].capitalize()} is a brave { white_list.get_rank_name(admin['role'])} of Dragonscale Castle \nUID: {admin['uid']}")
+        admin = player(uid, role, name)
+        App.add_player(admin)
+
+        update.message.reply_text(
+            f"{admin.get_name().capitalize()} is from now a brave { white_list.get_rank_name(admin.get_rank())} of Dragonscale Castle \nUID: {admin.get_uid()}")
+    except ValueError:
+        bad_command(update, context)
 
     return ConversationHandler.END
-    # except ValueError:
-    #    return bad_command(update, context)

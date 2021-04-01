@@ -15,7 +15,7 @@ def start(update: Update, context: CallbackContext):
     player = white_list.get_player(user.id)
     if player != -1:
         update.message.reply_text(
-            f"Hi {user.first_name}!\n{white_list.get_rank_name(player['rank'])} of Dragonscale castle", reply_markup=ReplyKeyboardRemove())
+            f"Hi {user.first_name}!\n{white_list.get_rank_name(player.get_rank())} of Dragonscale castle", reply_markup=ReplyKeyboardRemove())
     else:
         update.message.reply_text(
             f"Hi {user.first_name}!\n{white_list.get_rank_name(0)} of Dragonscale castle", reply_markup=ReplyKeyboardRemove())

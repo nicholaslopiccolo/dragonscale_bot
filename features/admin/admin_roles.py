@@ -19,13 +19,7 @@ def start(update: Update, context: CallbackContext):
     msg = ""
 
     for (rank, value) in reversed(list(enumerate(white_list.ranks))):
-        msg += f"{white_list.get_rank_name(rank).capitalize()}:\n"
-        if len(value['players']) > 0:
-            for (i, player) in enumerate(value['players']):
-                msg += f" {player.get_name()}: {player.get_uid()}\n"
-        else:
-            msg += "  None\n"
-        msg += "\n"
+        msg += f"{rank} - {white_list.get_rank_name(rank).capitalize()}\n"
 
     update.message.reply_text(msg)
     """

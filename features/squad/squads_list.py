@@ -22,7 +22,7 @@ def start(update: Update, context: CallbackContext):
         msg += f"{white_list.get_rank_name(rank).capitalize()}:\n"
         if len(value['players']) > 0:
             for (i, player) in enumerate(value['players']):
-                msg += f" {player.get_name()}: {player.get_uid()}\n"
+                msg += f" {player['name']}: {player['uid']}\n"
         else:
             msg += "  None\n"
         msg += "\n"

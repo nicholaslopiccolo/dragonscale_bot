@@ -1,19 +1,24 @@
 from telegram.ext import Filters
+from objects.player import player
+from database.database import database
 
-# Returns and object that let create white lists depending on user rank
-# Ranks start to 0-Player until 9-King/Queen
+"""
+Returns and object that let create white lists depending on user rank
+Ranks start to 0-Player until 9-King/Queen
+"""
 
 
-class Permission:
+class permission:
     def __init__(self):
         self.ranks = []
         self.rank_map = ["Player", "1 - unnamed", "2 - unnamed", "Guild Leader", "4 - unnamed",
                          "Teacher", "Squad Leader", "7 - unnamed", "Council Member", "King/Queen"]
 
         self.init_ranks()
+        self.db = database()
 
-        self.add_user(1007152999, 9, "TonRotob")
-        self.add_user(1033556742, 9, "Starcatcher")
+        #self.add_user(player(1007152999, 9, "TonRotob"))
+        #self.add_user(player(1033556742, 9, "Starcatcher"))
 
     def init_ranks(self):
         for i in range(10):
@@ -30,32 +35,25 @@ class Permission:
         return self.ranks[rank]["f_chats"]
 
     def get_player(self, uid):
-        for (i, value) in enumerate(self.ranks):
-            for (j, player) in enumerate(value["players"]):
-                if player["uid"] == uid:
-                    return {'player': player, 'rank': i}
+        for (i, rank) in enumerate(self.ranks):
+            for (j, p) in enumerate(rank["players"]):
+                if p.get_uid() == uid:
+                    return p
         return -1
 
-    def get_player_by_name(self, name):
-        for (i, value) in enumerate(self.ranks):
-            for (j, player) in enumerate(value["players"]):
-                if player["name"] == name:
-                    return {'player': player, 'rank': i}
-        return -1
-
-    def add_user(self, uid, rank, player):
-        p = {'name': player, 'uid': uid}
+    def add_user(self, p):
+        rank = p.get_rank()
         self.ranks[rank]["players"].append(p)
 
         for (j, value) in enumerate(self.ranks):
             if j <= rank:
                 #print(f"adding {uid} in {j}")
-                self.ranks[j]["f_users"].add_user_ids(uid)
+                self.ranks[j]["f_users"].add_user_ids(p.get_uid())
 
     def rm_user(self, uid):
         p = self.get_player(uid)
-        rank = p['rank']
-        self.ranks[rank]["players"].remove(p['player'])
+        rank = p.get_rank()
+        self.ranks[rank]["players"].remove(p)
         for (j, value) in enumerate(self.ranks):
             if j <= rank:
                 #print(f"removing {uid} in {j}")
